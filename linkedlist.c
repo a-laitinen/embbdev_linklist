@@ -6,7 +6,7 @@ int add_to_list(linked_list *ll, char *s)
 {
 	if(ll==NULL)return -1;
 	int index=ll->index;
-	printf("%d\n",index);
+	//printf("%d\n",index);
 	ll->prev=NULL;
 	linked_list* next_item=ll;
 	while(next_item->next!=NULL)
@@ -33,7 +33,8 @@ int display_item(linked_list *ll)
 	printf("index:%d ",ll->index);
 	int i;
 	printf(" %s ",ll->data);
-	printf("next:%x",ll->next);
+	printf("prev:%x ",ll->prev);
+	printf(" next:%x",ll->next);
 	return 0;
 }
 
@@ -46,12 +47,12 @@ int display_list(linked_list *ll)
 	while(next_item->next!=NULL)	
 	{
 		display_item(next_item);
-		printf("\n-------\n");	
+		printf("\n----------------------\n");	
 		count++;
 		next_item=next_item->next;
 	}
 		display_item(next_item);
-		printf("\n-------\n");	
+		printf("\n----------------------\n");	
 
 
 	
@@ -95,8 +96,8 @@ int delete_from_list(linked_list *ll, int index)
 		if(index==list_item->index)break;
 		
 	}
-	prev->next=list_item;
-	items_left=count_items(ll)-index;
+	prev->next=list_item->next;
+	items_left=count_items(ll);
 	free(list_item);
 	return items_left;
 }
@@ -114,17 +115,25 @@ int count_items(linked_list *ll)
 
 	return count;
 }
-int delete_next(linked_list *ll)
-{
-	if(ll==NULL||ll->next==NULL)return -1;
-	free(ll->next);
-	ll->next=NULL;
-	return 0;
-}
+
+
 void swap_items(linked_list *f, linked_list *s)
 {
 
 }
 int linkedlist_status(linked_list *ll){
+	return count_items(ll);
+}
+
+int empty_list(linked_list *ll){
+	int i,j;
+	j=count_items(ll);
 	
+	for(i=1;i<=j;i++)
+	{
+		delete_from_list(ll,i);
+	}
+	ll->next=NULL;
+	ll->data=0;
+	return 0;
 }

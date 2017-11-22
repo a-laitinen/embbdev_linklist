@@ -13,6 +13,6 @@ int display_list(linked_list *ll);
 linked_list * search_from_list(linked_list *ll, char *s);
 int delete_from_list(linked_list *ll, int index);
 int count_items(linked_list *ll);
-int delete_next(linked_list *ll);
 void swap_items(linked_list *f, linked_list *s);
 int linkedlist_status(linked_list *ll);
+int empty_list(linked_list *ll);

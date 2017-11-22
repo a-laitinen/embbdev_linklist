@@ -27,6 +27,7 @@ main: main.o $(PROJ).o
 test: Gtest_main.o test_case.o $(PROJ)_test.o  $(GTEST_LIB) libgtest.a
 	g++  $(LDFLAGS) -pthread $(PROJ)_test.o test_case.o Gtest_main.o $(GTEST_LIB) -o test
 
+
 ########## Normal ###########
 
 $(PROJ).o: $(PROJ).c

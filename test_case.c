@@ -16,6 +16,7 @@ TEST(addtest,normal) {
     linked_list head;
 
     head.next=0;
+	head.prev=0;
     head.data=str;
     head.index=0;
 
@@ -53,6 +54,7 @@ TEST(statustest,normal) {
     linked_list head;
 
     head.next=0;
+	head.prev=0;
     head.data=str;
     head.index=0;
 
@@ -99,6 +101,7 @@ TEST(display_item,add_to_list)
     linked_list *find;
     linked_list head;
     head.next=0;
+	head.prev=0;
     head.data=str;
     head.index=0;
 
@@ -140,6 +143,7 @@ TEST(display_list,normal)
 
     linked_list head;
     head.next=0;
+	head.prev=0;
     head.data=str;
     head.index=0;
 
@@ -168,6 +172,7 @@ TEST(delete,normal)
 
     linked_list head;
     head.next=0;
+	head.prev=0;
     head.data=str;
     head.index=0;
 
@@ -206,6 +211,7 @@ TEST(delete,multi) {
 
     linked_list head;
     head.next=0;
+	head.prev=0;
     head.data=str;
     head.index=0;
 
@@ -222,16 +228,16 @@ TEST(delete,multi) {
 
     i=delete_from_list(&head,12);
     EXPECT_EQ(i,45);
-    delete_from_list(&head,22);
+    i=delete_from_list(&head,22); /*test case was missing 'i=' in front of every delete_from_list function call */
     EXPECT_EQ(i,44);
-    delete_from_list(&head,25);
+    i=delete_from_list(&head,25);
     EXPECT_EQ(i,43);
-    delete_from_list(&head,32);
+    i=delete_from_list(&head,32);
     EXPECT_EQ(i,42);
-    delete_from_list(&head,38);
+    i=delete_from_list(&head,38);
     EXPECT_EQ(i,41);
 
-    delete_from_list(&head,380);
+    i=delete_from_list(&head,380);
     EXPECT_EQ(i,-1);
 
 }
@@ -248,6 +254,7 @@ TEST(empty,normal) {
 
     linked_list head;
     head.next=0;
+	head.prev=0;
     head.data=str;
     head.index=0;
 
@@ -257,7 +264,76 @@ TEST(empty,normal) {
     i=add_to_list(&head,str4);
     i=add_to_list(&head,str5);
     i=add_to_list(&head,str6);
-    //empty_list(&head);
+    empty_list(&head);
+	
+}
+TEST(prev_pointer,normal) {
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
+	linked_list* tmp;
+
+    linked_list head;
+    head.next=0;
+	head.prev=0;
+    head.data=str;
+    head.index=0;
+	
+	i=add_to_list(&head,str1);
+    i=add_to_list(&head,str2);
+    i=add_to_list(&head,str3);
+    i=add_to_list(&head,str4);
+    i=add_to_list(&head,str5);
+    i=add_to_list(&head,str6);
+	
+	
+	tmp=&head;
+	EXPECT_EQ(&head,tmp->next->prev);
+	EXPECT_EQ(tmp->next,tmp->next->next->prev);
+	EXPECT_EQ(tmp->next->next->next,tmp->next->next->next->next->prev);
+
+
+	
+}
+TEST(prev_pointer,delete) {
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
+	linked_list* tmp;
+
+    linked_list head;
+    head.next=0;
+	head.prev=0;
+    head.data=str;
+    head.index=0;
+	
+	i=add_to_list(&head,str1);
+    i=add_to_list(&head,str2);
+    i=add_to_list(&head,str3);
+    i=add_to_list(&head,str4);
+    i=add_to_list(&head,str5);
+    i=add_to_list(&head,str6);
+	
+	
+	tmp=&head;
+	EXPECT_EQ(tmp->next->next->prev,tmp->next);
+	ASSERT_STREQ(tmp->next->data,(char*)"zero");
+	delete_from_list(&head,1);
+	ASSERT_STREQ(tmp->next->data,(char*)"first");
+	EXPECT_EQ(tmp->next->next->prev,tmp->next);
+
+
+
 	
 }
 
